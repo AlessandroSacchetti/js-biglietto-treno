@@ -12,22 +12,24 @@ const price = 0.21;
 //console.log(price)
 
 //calcolo prezzo del biglietto
-let flatPrice1 = price * voyageLength;
+let flatPrice = price * voyageLength;
 //console.log(flatPrice1 + '€')
 
 //sconti (age<18 = -20%; age>65 = -40%)
-let discountUnderage1 = (flatPrice1 * 20) / 100;
-//console.log(discountUnderage1)
-
-let discountOverage1 = (flatPrice1 * 40) / 100;
-//console.log(discountOverage1)
+let discount = 0
+if(userAge<18){
+discount= 0.2
+} else if (userAge>65){
+discount = 0.4
+}
 
 //prezzo finale (max 2 decimali, es: 29.90€)
+const finalPrice = flatPrice - flatPrice*discount
+console.log(finalPrice.toFixed(2), finalPrice)
 
-if (userAge < 18) {
-    console.log('Il prezzo totale del biglietto è di: ' + flatPrice1 - discountUnderage1 + '€');
-} else if (userAge > 65) {
-    console.log('Il prezzo totale del biglietto è di: ' + flatPrice1 - discountOverage1 + '€');
-} else {
-    console.log('Il prezzo totale del biglietto è di: ' + flatPrice1 + '€');
-}
+//comunicazione front end con html
+const shownPrice = document.getElementById('finalPrice')
+shownPrice.innerHTML = 'Il prezzo del tuo biglietto è di: ' + finalPrice.toFixed(2) + ' &euro;'
+
+const showDiscount = document.getElementById('totalDiscount')
+showDiscount.innerHTML = '(Sconto totale ricevuto: ' + discount.toFixed(2) + ' &euro;)'
